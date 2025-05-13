@@ -1,10 +1,11 @@
+#pylint: disable=all
 from src.models.connection.connection_handler import DBConnectionHandler
 from .orders_repository import OrdersRepository
 import pytest
 
-db_connection_handler = DBConnectionHandler()
-db_connection_handler.connect_to_db()
-conn = db_connection_handler.get_db_connection()
+# db_connection_handler = DBConnectionHandler()
+# db_connection_handler.connect_to_db()
+# conn = db_connection_handler.get_db_connection()
 
 @pytest.mark.skip(reason="Interaction with MongoDB")
 def test_insert_document():
