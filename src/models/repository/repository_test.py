@@ -37,3 +37,68 @@ def test_insert_list_of_document():
         "price": 600.00
     }]
     orders_repository.insert_list_of_documents(my_documents)
+
+@pytest.mark.skip(reason="Interaction with MongoDB")      
+def test_get_many_documents():
+    orders_repository = OrdersRepository(conn)
+    doc_filter = {
+        "cupom": True
+    }
+    response =  orders_repository.select_many(doc_filter)
+    for doc in response:
+        print(doc)
+        print()
+        
+@pytest.mark.skip(reason="Interaction with MongoDB")             
+def test_get_one_document():
+    orders_repository = OrdersRepository(conn)
+    doc_filter = {
+        "cupom": True
+    }
+    response =  orders_repository.select_one(doc_filter)
+    print(response)
+        
+@pytest.mark.skip(reason="Interaction with MongoDB")           
+def test_select_many_with_properties():
+    orders_repository = OrdersRepository(conn)
+    doc_filter = { "cupom": True }
+    properties = { "_id": 0, "cupom": 0 }
+    response =  orders_repository.select_many_with_properties(doc_filter, properties)
+    for doc in response:
+        print(doc)
+        print()
+
+@pytest.mark.skip(reason="Interaction with MongoDB")           
+def test_select_if_property_exists():
+    orders_repository = OrdersRepository(conn)
+    property_name = "address"
+    response =  orders_repository.select_if_property_exists(property_name)
+    for doc in response:
+        print(doc)
+        print()
+
+@pytest.mark.skip(reason="Interaction with MongoDB")             
+def test_get_many_documents_with_multiples_filter():
+    orders_repository = OrdersRepository(conn)
+    doc_filter = { "cupom": False, "itens.batata": {"$exists": True} }
+    response =  orders_repository.select_many(doc_filter)
+    for doc in response:
+        print(doc)
+        print()
+
+@pytest.mark.skip(reason="Interaction with MongoDB")   
+def test_get_many_documents_with_or_filter():
+    orders_repository = OrdersRepository(conn)
+    doc_filter = { "$or": [{"address": {"$exists": True}},
+                          {"itens.batata": {"$exists": True}}
+                          ] } 
+    response =  orders_repository.select_many(doc_filter)
+    for doc in response:
+        print(doc)
+        print()
+        
+def test_get_one_document_by_object_id():
+    orders_repository = OrdersRepository(conn)
+    object_id = "68224abcb243d998026e8a32"
+    response =  orders_repository.select_by_object_id(object_id)
+    print(response)
