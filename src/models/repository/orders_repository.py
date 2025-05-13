@@ -40,3 +40,24 @@ class OrdersRepository:
         collection = self.__db_connection.get_collection(self.__collection_name)
         response = collection.find_one({"_id": ObjectId(object_id)})
         return response
+    
+    def edit_registry(self, object_id: str, properties: dict) -> None:
+        collection = self.__db_connection.get_collection(self.__collection_name)
+        collection.update_one(
+            {"_id": ObjectId(object_id)},
+            {"$set": properties},
+        )
+        
+    def edit_many_registries(self, doc_filter: dict, properties: dict) -> None:
+        collection = self.__db_connection.get_collection(self.__collection_name)
+        collection.update_many(
+            doc_filter,
+            {"$set": properties},
+        )
+        
+    def edit_registry_with_increment(self, object_id: str, properties: dict) -> None:
+        collection = self.__db_connection.get_collection(self.__collection_name)
+        collection.update_one(
+            {"_id": ObjectId(object_id)},
+            {"$inc": properties},
+        )

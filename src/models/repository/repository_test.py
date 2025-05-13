@@ -97,8 +97,30 @@ def test_get_many_documents_with_or_filter():
         print(doc)
         print()
         
+@pytest.mark.skip(reason="Interaction with MongoDB")           
 def test_get_one_document_by_object_id():
     orders_repository = OrdersRepository(conn)
     object_id = "68224abcb243d998026e8a32"
     response =  orders_repository.select_by_object_id(object_id)
     print(response)
+
+@pytest.mark.skip(reason="Interaction with MongoDB")         
+def test_edit_registry():
+    orders_repository = OrdersRepository(conn)
+    object_id = "68224abcb243d998026e8a32"
+    properties = { "cupom": False }
+    orders_repository.edit_registry(object_id, properties)
+    
+@pytest.mark.skip(reason="Interaction with MongoDB")        
+def test_edit_many_registry():
+    orders_repository = OrdersRepository(conn)
+    doc_filter = {"itens.hamburguer": {"$exists": True}}
+    properties = { "itens.hamburguer.tipo": "X-tudo" }
+    orders_repository.edit_many_registries(doc_filter, properties)
+
+@pytest.mark.skip(reason="Interaction with MongoDB")  
+def test_edit_registry_with_increment():
+    orders_repository = OrdersRepository(conn)
+    object_id = "68224abcb243d998026e8a32"
+    properties = { "itens.hamburguer.quantidade": 10 }
+    orders_repository.edit_registry_with_increment(object_id, properties)   
