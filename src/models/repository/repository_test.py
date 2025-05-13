@@ -123,4 +123,16 @@ def test_edit_registry_with_increment():
     orders_repository = OrdersRepository(conn)
     object_id = "68224abcb243d998026e8a32"
     properties = { "itens.hamburguer.quantidade": 10 }
-    orders_repository.edit_registry_with_increment(object_id, properties)   
+    orders_repository.edit_registry_with_increment(object_id, properties) 
+
+@pytest.mark.skip(reason="Interaction with MongoDB")      
+def test_delete_registry():
+    orders_repository = OrdersRepository(conn)
+    object_id = "68237c18b243d998026e8a35"
+    orders_repository.delete_registry(object_id)  
+
+@pytest.mark.skip(reason="Interaction with MongoDB")     
+def test_delete_many_registry():
+    orders_repository = OrdersRepository(conn)
+    doc_filter = {"itens.batata.tamanho": "Média"}
+    orders_repository.delete_many_registries(doc_filter)
