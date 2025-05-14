@@ -42,7 +42,7 @@ Você pode adicionar uma seção logo após o passo de criar o `.env`, algo como
 
 ---
 
-4.  **Configurando o MongoDB
+4.  **Configurando o MongoDB**
 
 Para que o projeto funcione corretamente, é necessário ter uma instância do **MongoDB** rodando localmente ou na nuvem. Este projeto espera que exista um banco de dados chamado `orders`.
 
