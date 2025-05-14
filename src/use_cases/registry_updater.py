@@ -2,35 +2,41 @@ from src.models.repository.interfaces.orders_repository import OrdersRepositoryI
 from src.main.http_types.http_request import HttpRequest
 from src.main.http_types.http_response import HttpResponse
 from src.errors.error_handler import error_handler
-from src.errors.types.http_not_found import HttpNotFoundError
+from src.validators.registry_updater_validator import registry_updater_validator
 
-class RegistryFinder:
+
+class RegistryUpdater:
     def __init__(self, orders_repository: OrdersRepositoryInterface) -> None:
         self.__orders_repository = orders_repository
-
-    def find(self, http_request: HttpRequest) -> HttpResponse:
+        
+    def update(self, http_request: HttpRequest) -> HttpResponse:
         try:
             order_id = http_request.path_params.get("order_id")
-            order = self.__search_order(order_id)
-            return self.__format_response(order)
+            body = http_request.body
+            self.__validate_body(body)
+            self.__updater_order(order_id, body)
+            
+            return self.__format_response(order_id)
+
         except Exception as exception:
             return error_handler(exception)
         
-    def __search_order(self, order_id: str) -> dict:
-        order = self.__orders_repository.select_by_object_id(order_id)
-        if not order:
-            raise HttpNotFoundError("Order not found")
-        return order
+    def __validate_body(self, body: dict) -> None:
+        registry_updater_validator(body)
     
-    def __format_response(self, order: dict) -> HttpResponse:
-        order["_id"] = str(order["_id"])
+    def __updater_order(self, order_id: str, body: dict) -> None:
+        update_field = body["data"]
+        self.__orders_repository.edit_registry(order_id, update_field)
+        
+    def __format_response(self, order_id: str) -> HttpResponse:
         return HttpResponse(
             body={
                 "data": {
                    "count": 1,
                    "type": "Order",
-                   "attributes": order
+                   "order_id": order_id
                 }
             },
             status_code=200,
         )
+     

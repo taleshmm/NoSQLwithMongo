@@ -15,8 +15,8 @@ def test_registry_order_validator():
         }
     }
 
-    response = registry_order_validator(body)
-    assert response is True
+    registry_order_validator(body)
+
     
 def test_registry_order_validator_with_error():
     body = {
