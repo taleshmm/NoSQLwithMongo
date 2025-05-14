@@ -2,7 +2,7 @@ from pymongo import MongoClient
 class DBConnectionHandler:
     def __init__(self) -> None:
         self.__connection_string = "mongodb://{}:{}/".format("localhost", "27017")
-        self.__database_name = "rocket_db"
+        self.__database_name = "database_name"
         self.__client = None
         self.__db_connection = None
         
