@@ -1,6 +1,4 @@
 from pymongo import MongoClient
-
-
 class DBConnectionHandler:
     def __init__(self) -> None:
         self.__connection_string = "mongodb://{}:{}/".format("localhost", "27017")
@@ -14,3 +12,5 @@ class DBConnectionHandler:
             
     def get_db_connection(self):
         return self.__db_connection
+    
+db_connection_handler = DBConnectionHandler()
