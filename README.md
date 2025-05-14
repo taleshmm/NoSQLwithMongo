@@ -44,23 +44,18 @@ Você pode adicionar uma seção logo após o passo de criar o `.env`, algo como
 
 4.  **Configurando o MongoDB**
 
-Para que o projeto funcione corretamente, é necessário ter uma instância do **MongoDB** rodando localmente ou na nuvem. Este projeto espera que exista um banco de dados chamado `orders`.
+Para que a aplicação funcione corretamente, você precisa de uma instância do MongoDB rodando localmente (ou remotamente).
 
-### 🔄 Opções para configurar:
+1. **Crie um banco de dados** com o nome de sua preferência (ex: `myDatabase`).
+2. **Crie uma coleção chamada** `ordens` dentro deste banco.
+3. **Adicione** o nome do seu banco de dados em:
 
-**MongoDB local (recomendado para testes locais):**
-
-Se você já tem o MongoDB instalado:
-
-```bash
-mongod
+```connection_handler
+self.__database_name = "Nome de sua escolha aqui"
 ```
 
-Em seguida, no terminal do Mongo shell ou um client como MongoDB Compass:
 
-```bash
-use orders
-```
+> ⚠️ Importante: O nome da coleção precisa ser obrigatoriamente `ordens`. A aplicação espera encontrar essa coleção dentro do banco configurado.
 
 
 5. **Executar o servidor Flask**
